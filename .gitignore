@@ -1,0 +1,11 @@
+*
+!.gitignore
+!README
+!UNLICENSE
+!*.sln
+!*.cs
+!*.csproj
+!*Settings.StyleCop
+!HaloTrainer
+!plugins
+!plugins/nouzuru
