@@ -2,6 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Runtime.InteropServices;
+    using System.Threading;
     using Nouzuru;
 
     /// <summary>
@@ -9,10 +11,43 @@
     /// </summary>
     public class HaloTrainer : Patcher
     {
+        #region Fields
+
         /// <summary>
         /// The list of levels and their memory addresses.
         /// </summary>
         private Dictionary<short, int> levelAddresses;
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Initializes a new instance of the HaloTrainer class.
+        /// </summary>
+        public HaloTrainer()
+        {
+            this.EnableMassiveShields = true;
+            this.EnableInvisibility = true;
+        }
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Gets or sets a value indicating whether or not this trainer should grant the player massive shields.
+        /// </summary>
+        public bool EnableMassiveShields { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether or not this trainer should enable invisibility for the player.
+        /// </summary>
+        public bool EnableInvisibility { get; set; }
+
+        #endregion
+
+        #region Methods
 
         /// <summary>
         /// Opens the halo.exe process.
@@ -70,39 +105,44 @@
         }
 
         /// <summary>
+        /// Read the master chief data from memory into a MasterChief structure.
+        /// </summary>
+        /// <returns>Returns a MasterChief structure populated with data from the game.</returns>
+        public MasterChief ReadMasterChiefData()
+        {
+            return this.ReadStructure<MasterChief>(this.GetPlayerBaseAddress());
+        }
+
+        /// <summary>
         /// Freeze the player's shields at 15 (normal is 1, overshield is 3).
         /// </summary>
-        /// <param name="enableInvisibility">If true, the player will also receive active cammo.</param>
-        public void FreezeShields(bool enableInvisibility = true)
+        protected override void FreezeThread()
         {
             IntPtr baseAddress = this.GetPlayerBaseAddress();
-            const int ShieldsOffset = 0x88;
-            const int InvisibilityOffset = 0x1a8;
-            float newShieldValue = 15;
+            int shieldsOffset = Marshal.OffsetOf(typeof(MasterChief), "Shields").ToInt32();
+            int invisibilityOffset = Marshal.OffsetOf(typeof(MasterChief), "Invisibility").ToInt32();
+            byte[] newShieldValue = BitConverter.GetBytes((float)15);
             byte[] newInvisibilityValue = new byte[] { 0x51 };
-            byte[] velocities = new byte[12];
-
-            Console.WriteLine("Player address base: 0x" + baseAddress.ToString("X"));
-            Console.WriteLine("Beginning freeze shields loop...");
-
-            uint printCount = 0;
 
             while (true)
             {
-                // Find the address again, in case something was re-loaded.
+                // Find the address again, in case a new level or level area was loaded.
                 baseAddress = this.GetPlayerBaseAddress();
+
                 if (!baseAddress.Equals(IntPtr.Zero))
                 {
-                    this.Write(IntPtr.Add(baseAddress, ShieldsOffset), BitConverter.GetBytes(newShieldValue));
-
-                    if (enableInvisibility)
+                    if (this.EnableMassiveShields)
                     {
-                        this.Write(IntPtr.Add(baseAddress, InvisibilityOffset), newInvisibilityValue);
+                        this.Write(IntPtr.Add(baseAddress, shieldsOffset), newShieldValue);
+                    }
+
+                    if (this.EnableInvisibility)
+                    {
+                        this.Write(IntPtr.Add(baseAddress, invisibilityOffset), newInvisibilityValue);
                     }
                 }
 
-                printCount++;
-                System.Threading.Thread.Sleep(50);
+                Thread.Sleep(this.FreezeFrequency);
             }
         }
 
@@ -164,5 +204,86 @@
                 return false;
             }
         }
+
+        #endregion
+
+        #region Structs
+
+        /// <summary>
+        /// Contains data about the current player, as it is represented in the game's memory.
+        /// </summary>
+        [StructLayout(LayoutKind.Explicit)]
+        public struct MasterChief
+        {
+            /// <summary>
+            /// The X axis of the character's in-game position.
+            /// </summary>
+            [FieldOffset(0x0)]
+            public float XAxisPosition;
+
+            /// <summary>
+            /// The Y axis of the character's in-game position.
+            /// </summary>
+            [FieldOffset(0x4)]
+            public float YAxisPosition;
+
+            /// <summary>
+            /// The Z axis of the character's in-game position.
+            /// </summary>
+            [FieldOffset(0x8)]
+            public float ZAxisPosition;
+
+            /// <summary>
+            /// The velocity the player is traveling along the X axis.
+            /// </summary>
+            [FieldOffset(0xc)]
+            public float XAxisVelocity;
+
+            /// <summary>
+            /// The velocity the player is traveling along the Y axis.
+            /// </summary>
+            [FieldOffset(0x10)]
+            public float YAxisVelocity;
+
+            /// <summary>
+            /// The velocity the player is traveling along the Z axis.
+            /// </summary>
+            [FieldOffset(0x14)]
+            public float ZAxisVelocity;
+
+            /// <summary>
+            /// The direction that the player is facing.
+            /// </summary>
+            [FieldOffset(0x1c)]
+            public float DirectionFacing;
+
+            /// <summary>
+            /// The amount of shields the player has.
+            /// </summary>
+            [FieldOffset(0x88)]
+            public float Shields;
+
+            /// <summary>
+            /// A byte indicating the state of invisibility for the player.
+            /// 0x51 indicates that the player is currently invisible.
+            /// Any other value indicates that the player is currently visibile.
+            /// </summary>
+            [FieldOffset(0x1a8)]
+            public byte Invisibility;
+
+            /// <summary>
+            /// The number of frag grenades that the player currently has.
+            /// </summary>
+            [FieldOffset(0x2c2)]
+            public byte GrenadeFrags;
+
+            /// <summary>
+            /// The number of plasma grenades that the player currently has.
+            /// </summary>
+            [FieldOffset(0x2c3)]
+            public byte GrenadePlasmas;
+        }
+
+        #endregion
     }
 }

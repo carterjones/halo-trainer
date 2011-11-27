@@ -23,7 +23,8 @@
             ht.EnableUnlimitedHumanAmmo();
             ht.EnableUnlimitedGrenades();
             ht.EnableUnlimitedFlashlightPower();
-            ht.FreezeShields();
+            ht.StartFreezeThread();
+            HaloTrainer.MasterChief mc = ht.ReadMasterChiefData();
 
             Console.WriteLine("Press any key to exit.");
             Console.ReadKey();
