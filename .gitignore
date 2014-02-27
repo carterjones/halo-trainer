@@ -5,6 +5,11 @@
 !*.sln
 !*.cs
 !*.csproj
+!*.cea
+!*.cem
+!*.ct
+!*.csx
 !*Settings.StyleCop
 !HaloTrainer
 !HaloTrainer\Properties
+!cheat_engine_files

@@ -1,0 +1,10 @@
+[enable]
+005596c6:
+nop
+nop
+nop
+
+[disable]
+005596c6:
+mov [eax+08],edx
+

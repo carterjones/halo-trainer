@@ -1,0 +1,91 @@
+[enable]
+alloc(newmem,2048) //2kb should be enough
+alloc(max_value,4)
+alloc(mult_value,4)
+label(float_computation)
+label(returnhere)
+label(originalcode)
+label(exit)
+label(error_handler)
+label(st0_greater)
+label(st0_lower)
+label(both_equal)
+registersymbol(max_value)
+registersymbol(mult_value)
+
+newmem:            // RWX
+
+max_value:
+db CD CC CC 3D     // 0.1f
+
+mult_value:
+//db CD CC 8C 3F     // 1.1f
+db 00 00 00 40     // 2.0f
+
+float_computation:
+
+// initialize variables.
+push edx           // put the value of edx into the RAM.
+fld [esp]          // load edx's value onto the fstack.
+
+// perform computation.
+fmul [mult_value]  // multiply by mult_value. keep on top of fstack.
+jmp st0_lower
+
+// see if the new value of edx is greater than max_value
+fcom [max_value]   // compare ST(0) with the value of the real8_var variable
+fstsw ax           // copy the Status Word containing the result to AX
+fwait              // insure the previous instruction is completed
+sahf               // transfer the condition codes to the CPU's flag register
+//jpe error_handler  // the comparison was indeterminate
+                   // this condition should be verified first
+                   // then only two of the next three conditional jumps
+                   // should become necessary, in whatever order is preferred,
+                   // the third jump being replaced by code to handle that case
+ja st0_greater     // when all flags are 0
+//jb st0_lower       // only the C0 bit (CF flag) would be set if no error
+//jz both_equal      // only the C3 bit (ZF flag) would be set if no error
+
+st0_lower:
+// save edx's new value
+fstp [esp]         // copy value back to tmp location for edx (top of stack)
+pop edx            // save the temp value of edx to edx
+jmp originalcode
+
+both_equal:
+st0_greater:
+// maybe set edx to the max value?
+//mov edx,[max_value]
+error_handler:
+// ignore previous multiplication calculations
+fstp st(0)         // revert fstack
+sub esp,4          // revert stack
+jmp originalcode
+
+originalcode:
+mov [eax],edx
+mov edx,[esp+00000100]
+
+exit:
+jmp returnhere
+
+005596ba:
+jmp float_computation
+nop
+nop
+nop
+nop
+returnhere:
+
+
+
+[disable]
+unregistersymbol(max_value)
+unregistersymbol(mult_value)
+dealloc(newmem)
+dealloc(max_value,4)
+dealloc(mult_value,4)
+
+005596ba:
+mov [eax],edx
+mov edx,[esp+00000100]
