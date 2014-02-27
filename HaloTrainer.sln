@@ -5,9 +5,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HaloTrainer", "HaloTrainer\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nouzuru", "..\nouzuru\Nouzuru\Nouzuru.csproj", "{27DFEE97-CFFB-4B4C-ACED-075AA2E25B11}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logger", "..\nouzuru\plugins\distorm3cs\plugins\logger\Logger\Logger.csproj", "{78FD99B9-9FF9-41FD-855D-8772E38EDE72}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Distorm3cs", "..\distorm3cs\Distorm3cs\Distorm3cs.csproj", "{27C84C77-6F54-481F-8598-639AC768753D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Distorm3cs", "..\nouzuru\plugins\distorm3cs\Distorm3cs\Distorm3cs.csproj", "{27C84C77-6F54-481F-8598-639AC768753D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bunseki", "..\bunseki\Bunseki\Bunseki.csproj", "{AF903833-3F53-42BC-ADA1-797D9709EA3C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,18 +33,20 @@ Global
 		{27DFEE97-CFFB-4B4C-ACED-075AA2E25B11}.Release|x64.Build.0 = Release|x64
 		{27DFEE97-CFFB-4B4C-ACED-075AA2E25B11}.Release|x86.ActiveCfg = Release|x86
 		{27DFEE97-CFFB-4B4C-ACED-075AA2E25B11}.Release|x86.Build.0 = Release|x86
-		{78FD99B9-9FF9-41FD-855D-8772E38EDE72}.Debug|x64.ActiveCfg = Debug|x64
-		{78FD99B9-9FF9-41FD-855D-8772E38EDE72}.Debug|x86.ActiveCfg = Debug|x86
-		{78FD99B9-9FF9-41FD-855D-8772E38EDE72}.Release|x64.ActiveCfg = Release|x64
-		{78FD99B9-9FF9-41FD-855D-8772E38EDE72}.Release|x64.Build.0 = Release|x64
-		{78FD99B9-9FF9-41FD-855D-8772E38EDE72}.Release|x86.ActiveCfg = Release|x86
-		{78FD99B9-9FF9-41FD-855D-8772E38EDE72}.Release|x86.Build.0 = Release|x86
 		{27C84C77-6F54-481F-8598-639AC768753D}.Debug|x64.ActiveCfg = Debug|x64
 		{27C84C77-6F54-481F-8598-639AC768753D}.Debug|x86.ActiveCfg = Debug|x86
 		{27C84C77-6F54-481F-8598-639AC768753D}.Release|x64.ActiveCfg = Release|x64
 		{27C84C77-6F54-481F-8598-639AC768753D}.Release|x64.Build.0 = Release|x64
 		{27C84C77-6F54-481F-8598-639AC768753D}.Release|x86.ActiveCfg = Release|x86
 		{27C84C77-6F54-481F-8598-639AC768753D}.Release|x86.Build.0 = Release|x86
+		{AF903833-3F53-42BC-ADA1-797D9709EA3C}.Debug|x64.ActiveCfg = Debug|x64
+		{AF903833-3F53-42BC-ADA1-797D9709EA3C}.Debug|x64.Build.0 = Debug|x64
+		{AF903833-3F53-42BC-ADA1-797D9709EA3C}.Debug|x86.ActiveCfg = Debug|x86
+		{AF903833-3F53-42BC-ADA1-797D9709EA3C}.Debug|x86.Build.0 = Debug|x86
+		{AF903833-3F53-42BC-ADA1-797D9709EA3C}.Release|x64.ActiveCfg = Release|x64
+		{AF903833-3F53-42BC-ADA1-797D9709EA3C}.Release|x64.Build.0 = Release|x64
+		{AF903833-3F53-42BC-ADA1-797D9709EA3C}.Release|x86.ActiveCfg = Release|x86
+		{AF903833-3F53-42BC-ADA1-797D9709EA3C}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

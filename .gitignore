@@ -1,11 +1,10 @@
 *
 !.gitignore
 !README
-!UNLICENSE
+!LICENSE
 !*.sln
 !*.cs
 !*.csproj
 !*Settings.StyleCop
 !HaloTrainer
-!plugins
-!plugins/nouzuru
+!HaloTrainer\Properties

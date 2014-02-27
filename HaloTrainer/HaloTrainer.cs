@@ -155,7 +155,7 @@
         /// </returns>
         private IntPtr GetPlayerBaseAddress()
         {
-            if (!this.IsOpen())
+            if (!this.IsOpen)
             {
                 return IntPtr.Zero;
             }
@@ -192,15 +192,15 @@
         /// <returns>Returns true if the enabling process was successful.</returns>
         private bool EnableWithNOPInstruction(ulong address, string thingEnabled)
         {
-            Console.Write("Enabling " + thingEnabled + "...");
+            Console.WriteLine("[*] Enabling " + thingEnabled + "...");
             if (this.NOPInstruction(address))
             {
-                Console.WriteLine("Success.");
+                Console.WriteLine("[+] Success.");
                 return true;
             }
             else
             {
-                Console.WriteLine("Failure.");
+                Console.WriteLine("[-] Failure.");
                 return false;
             }
         }
