@@ -92,13 +92,13 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\nouzuru\Nouzuru\Nouzuru.csproj">
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\plugins\nouzuru\Nouzuru\Nouzuru.csproj">
       <Project>{27DFEE97-CFFB-4B4C-ACED-075AA2E25B11}</Project>
       <Name>Nouzuru</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

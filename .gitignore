@@ -11,5 +11,7 @@
 !*.csx
 !*Settings.StyleCop
 !HaloTrainer
-!HaloTrainer\Properties
+!HaloTrainer/Properties
+!plugins
+!plugins/nouzuru
 !cheat_engine_files

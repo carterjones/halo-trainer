@@ -1,0 +1,3 @@
+[submodule "plugins/nouzuru"]
+	path = plugins/nouzuru
+	url = https://gitlab.com/carterjones/nouzuru.git
