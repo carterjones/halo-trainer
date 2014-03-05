@@ -151,7 +151,7 @@
         /// </summary>
         /// <returns>
         /// Returns the base address of the player's class object, if a level is being played.
-        /// Returns 0 if the player is in the home screen UI (ie: not in any level).
+        /// Returns 0 if the player is in the home screen UI (i.e.: not in any level).
         /// </returns>
         private IntPtr GetPlayerBaseAddress()
         {
@@ -266,7 +266,7 @@
             /// <summary>
             /// A byte indicating the state of invisibility for the player.
             /// 0x51 indicates that the player is currently invisible.
-            /// Any other value indicates that the player is currently visibile.
+            /// Any other value indicates that the player is currently visible.
             /// </summary>
             [FieldOffset(0x1a8)]
             public byte Invisibility;
