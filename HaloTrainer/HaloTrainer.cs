@@ -27,8 +27,6 @@
         /// </summary>
         public HaloTrainer()
         {
-            this.EnableMassiveShields = true;
-            this.EnableInvisibility = true;
         }
 
         #endregion
