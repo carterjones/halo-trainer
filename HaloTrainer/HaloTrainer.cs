@@ -266,7 +266,7 @@
             /// <summary>
             /// A byte indicating the state of invisibility for the player.
             /// 0x51 indicates that the player is currently invisible.
-            /// Any other value indicates that the player is currently visible.
+            /// 0x41 indicates that the player is currently visible.
             /// </summary>
             [FieldOffset(0x1a8)]
             public byte Invisibility;
