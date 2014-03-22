@@ -20,14 +20,71 @@
             HaloTrainer ht = new HaloTrainer();
             ht.Open();
 
-            ht.EnableUnlimitedHumanAmmo();
-            ht.EnableUnlimitedGrenades();
-            ht.EnableUnlimitedFlashlightPower();
-            ht.StartFreezeThread();
-            HaloTrainer.MasterChief mc = ht.ReadMasterChiefData();
+            Options options = new Options();
+            if (CommandLine.Parser.Default.ParseArguments(args, options))
+            {
+                // Disable or enable unlimited ammo.
+                if (options.DisableUnlimitedAmmo || options.ResetEverything)
+                {
+                    ht.DisableUnlimitedHummanAmmo();
+                }
+                else
+                {
+                    ht.EnableUnlimitedHumanAmmo();
+                }
 
-            Console.WriteLine("Press any key to exit.");
-            Console.ReadKey();
+                // Disable or enable unlimited grenades.
+                if (options.DisableUnlimitedGrenades || options.ResetEverything)
+                {
+                    ht.DisableUnlimitedGrenades();
+                }
+                else
+                {
+                    ht.EnableUnlimitedGrenades();
+                }
+
+                // Disable or enable unlimited flashlight power.
+                if (options.DisableUnlimitedFlashlightPower || options.ResetEverything)
+                {
+                    ht.DisableUnlimitedFlashlightPower();
+                }
+                else
+                {
+                    ht.EnableUnlimitedFlashlightPower();
+                }
+
+                // Disable invisibility when specified. Otherwise enable them.
+                if (options.ResetInvisibility || options.ResetEverything)
+                {
+                    ht.EnableInvisibility = false;
+                    ht.ResetInvisibility();
+                }
+                else
+                {
+                    ht.EnableInvisibility = true;
+                }
+
+                // Disable massive shields when specified. Otherwise enable them.
+                if (options.ResetShields || options.ResetEverything)
+                {
+                    ht.EnableMassiveShields = false;
+                    ht.ResetShields();
+                }
+                else
+                {
+                    ht.EnableMassiveShields = true;
+                }
+
+                // If either invisibility or massive shields are enabled, start the thread to freeze their values.
+                if (ht.EnableInvisibility || ht.EnableMassiveShields)
+                {
+                    ht.StartFreezeThread();
+
+                    // Wait for user input to exit the freeze thread.
+                    Console.WriteLine("Press any key to exit.");
+                    Console.ReadKey(true);
+                }
+            }
         }
     }
 }
