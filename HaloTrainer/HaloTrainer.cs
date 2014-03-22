@@ -85,6 +85,18 @@
         }
 
         /// <summary>
+        /// Disables unlimited human weapon ammunition.
+        /// </summary>
+        /// <returns>Returns true if the disabling process was successful.</returns>
+        public bool DisableUnlimitedHummanAmmo()
+        {
+            return this.RestoreOriginalBytes(
+                0x004c2696,
+                "unlimited human weapon ammunition",
+                new byte[] { 0x66, 0x89, 0x46, 0x08 });
+        }
+
+        /// <summary>
         /// Enables unlimited grenades.
         /// </summary>
         /// <returns>Returns true if the enabling process was successful.</returns>
@@ -94,12 +106,58 @@
         }
 
         /// <summary>
+        /// Disables unlimited grenades.
+        /// </summary>
+        /// <returns>Returns true if the disabling process was successful.</returns>
+        public bool DisableUnlimitedGrenades()
+        {
+            return this.RestoreOriginalBytes(
+                0x00569ce4,
+                "unlimited grenades",
+                new byte[] { 0xfe, 0x8c, 0x38, 0x1e, 0x03, 0x00, 0x00 });
+        }
+
+        /// <summary>
         /// Enables unlimited flashlight power.
         /// </summary>
         /// <returns>Returns true if the enabling process was successful.</returns>
         public bool EnableUnlimitedFlashlightPower()
         {
             return this.EnableWithNOPInstruction(0x0055f0ad, "unlimited flashlight power");
+        }
+
+        /// <summary>
+        /// Disables unlimited flashlight power.
+        /// </summary>
+        /// <returns>Returns true if the disabling process was successful.</returns>
+        public bool DisableUnlimitedFlashlightPower()
+        {
+            return this.RestoreOriginalBytes(
+                0x0055f0ad,
+                "unlimited flashlight power",
+                new byte[] { 0xd9, 0x9b, 0x44, 0x03, 0x00, 0x00 });
+        }
+
+        /// <summary>
+        /// Sets the player's invisibility value to 0x41.
+        /// </summary>
+        /// <returns>Returns true if the invisibility value was successfully set.</returns>
+        public bool ResetInvisibility()
+        {
+            int invisibilityOffset = Marshal.OffsetOf(typeof(MasterChief), "Invisibility").ToInt32();
+            ulong invisibilityAddress = (ulong)IntPtr.Add(this.GetPlayerBaseAddress(), invisibilityOffset).ToInt64();
+            return this.RestoreOriginalBytes(invisibilityAddress, "invisibility", new byte[] { 0x41 });
+        }
+
+        /// <summary>
+        /// Sets the player's shields value to 1.
+        /// </summary>
+        /// <returns>Returns true if the shields value was successfully set.</returns>
+        public bool ResetShields()
+        {
+            int shieldsOffset = Marshal.OffsetOf(typeof(MasterChief), "Shields").ToInt32();
+            ulong shieldsAddress = (ulong)IntPtr.Add(this.GetPlayerBaseAddress(), shieldsOffset).ToInt64();
+            return this.RestoreOriginalBytes(shieldsAddress, "massive shields", BitConverter.GetBytes(1.0f));
         }
 
         /// <summary>
@@ -192,6 +250,31 @@
         {
             Console.WriteLine("[*] Enabling " + thingEnabled + "...");
             if (this.NOPInstruction(address))
+            {
+                Console.WriteLine("[+] Success.");
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("[-] Failure.");
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Restores some functionality in halo by resetting an instruction to its original bytes.
+        /// </summary>
+        /// <param name="address">
+        /// The address of the thing that restricts the player's awesomeness. The instruction at this address will be
+        /// replaced with the supplied bytes.
+        /// </param>
+        /// <param name="thingDisabled">The thing that makes the player more awesome.</param>
+        /// <param name="originalBytes">The original bytes of the binary at the specified address.</param>
+        /// <returns>Returns true if the enabling process was successful.</returns>
+        private bool RestoreOriginalBytes(ulong address, string thingDisabled, byte[] originalBytes)
+        {
+            Console.WriteLine("[*] Disabling " + thingDisabled + "...");
+            if (this.Write(IntPtr.Add(IntPtr.Zero, (int)address), originalBytes))
             {
                 Console.WriteLine("[+] Success.");
                 return true;
