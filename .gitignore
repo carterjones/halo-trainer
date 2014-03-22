@@ -3,6 +3,7 @@
 !README
 !LICENSE
 !*.sln
+!*.config
 !*.cs
 !*.csproj
 !*.cea
