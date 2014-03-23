@@ -17,12 +17,12 @@
         /// <param name="args">The command line arguments passed to this program.</param>
         private static void Main(string[] args)
         {
-            HaloTrainer ht = new HaloTrainer();
-            ht.Open();
-
             Options options = new Options();
             if (CommandLine.Parser.Default.ParseArguments(args, options))
             {
+                HaloTrainer ht = new HaloTrainer();
+                ht.Open();
+
                 // Disable or enable unlimited ammo.
                 if (options.DisableUnlimitedAmmo || options.ResetAll)
                 {
