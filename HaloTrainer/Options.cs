@@ -55,6 +55,10 @@
                 AddDashesToOption = true
             };
 
+            help.AddPreOptionsLine(" ");
+            help.AddPreOptionsLine("Note: Run this program with administrator permissions to ensure that you can ");
+            help.AddPreOptionsLine("      modify the halo.exe process. Running as a non-administrator can have ");
+            help.AddPreOptionsLine("      unpredictable effects.");
             help.AddOptions(this);
             return help;
         }
