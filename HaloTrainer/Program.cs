@@ -62,6 +62,7 @@
                 else
                 {
                     ht.EnableInvisibility = true;
+                    Console.WriteLine("[+] Invisibility enabled.");
                 }
 
                 // Disable massive shields when specified. Otherwise enable them.
@@ -73,6 +74,7 @@
                 else
                 {
                     ht.EnableMassiveShields = true;
+                    Console.WriteLine("[+] Massive shields enabled.");
                 }
 
                 // If either invisibility or massive shields are enabled, start the thread to freeze their values.
