@@ -61,7 +61,7 @@
             // Initialize the list of 1st person campaign levels.
             this.levelAddresses = new Dictionary<short, int>();
             this.levelAddresses.Add(0x6975, 0x00000000); // ui (not in a level)           // levels\ui\ui
-            this.levelAddresses.Add(0x3161, 0x4005220C); // the pillar of autumn          // levels\a10\a10
+            this.levelAddresses.Add(0x3161, 0x4005193C); // the pillar of autumn          // levels\a10\a10
             this.levelAddresses.Add(0x3361, 0x4005220C); // halo                          // levels\a30\a30
             this.levelAddresses.Add(0x3561, 0x400534C0); // the truth and reconciliation  // levels\a50\a50
             this.levelAddresses.Add(0x3362, 0x4005313C); // the silent cartogropher       // levels\b30\b30
