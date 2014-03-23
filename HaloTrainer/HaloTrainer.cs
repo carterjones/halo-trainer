@@ -60,17 +60,17 @@
 
             // Initialize the list of 1st person campaign levels.
             this.levelAddresses = new Dictionary<short, int>();
-            this.levelAddresses.Add(0x6975, 0x00000000); // ui (not in a level)           // levels\ui\ui
-            this.levelAddresses.Add(0x3161, 0x4005193C); // the pillar of autumn          // levels\a10\a10
-            this.levelAddresses.Add(0x3361, 0x4005220C); // halo                          // levels\a30\a30
-            this.levelAddresses.Add(0x3561, 0x400534C0); // the truth and reconciliation  // levels\a50\a50
-            this.levelAddresses.Add(0x3362, 0x4005313C); // the silent cartogropher       // levels\b30\b30
-            this.levelAddresses.Add(0x3462, 0x40051DA4); // assault on the control room   // levels\b40\b40
-            this.levelAddresses.Add(0x3163, 0x40050700); // 343 guilty spark              // levels\c10\c10
-            this.levelAddresses.Add(0x3263, 0x4005214C); // the library                   // levels\c20\c20
-            this.levelAddresses.Add(0x3463, 0x40051E10); // two betrayals                 // levels\c40\c40
-            this.levelAddresses.Add(0x3264, 0x40051D2C); // keyes                         // levels\d20\d20
-            this.levelAddresses.Add(0x3464, 0x40051BF4); // the maw                       // levels\d40\d40
+            this.levelAddresses.Add(0x6975, 0x00000000); // ui (not in a level)
+            this.levelAddresses.Add(0x3161, 0x4005193C); // the pillar of autumn
+            this.levelAddresses.Add(0x3361, 0x4005220C); // halo
+            this.levelAddresses.Add(0x3561, 0x400534C0); // the truth and reconciliation
+            this.levelAddresses.Add(0x3362, 0x4005313C); // the silent cartogropher
+            this.levelAddresses.Add(0x3462, 0x40051DA4); // assault on the control room
+            this.levelAddresses.Add(0x3163, 0x40050700); // 343 guilty spark
+            this.levelAddresses.Add(0x3263, 0x4005214C); // the library
+            this.levelAddresses.Add(0x3463, 0x40051E10); // two betrayals
+            this.levelAddresses.Add(0x3264, 0x40051D2C); // keyes
+            this.levelAddresses.Add(0x3464, 0x40051BF4); // the maw
 
             return true;
         }
