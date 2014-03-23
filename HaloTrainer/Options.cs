@@ -42,8 +42,8 @@
         [Option("reset-shields", HelpText = "Resets the player's shields.", MutuallyExclusiveSet = "shields")]
         public bool ResetShields { get; set; }
 
-        [Option("reset-everything", HelpText = "Restores original functionality and values to: ammo, grenades, flashlight power, invisibility, and shields")]
-        public bool ResetEverything { get; set; }
+        [Option("reset-all", HelpText = "Restores original functionality and values to: ammo, grenades, flashlight power, invisibility, and shields")]
+        public bool ResetAll { get; set; }
 
         [HelpOption]
         public string GetUsage()

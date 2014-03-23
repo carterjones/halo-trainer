@@ -24,7 +24,7 @@
             if (CommandLine.Parser.Default.ParseArguments(args, options))
             {
                 // Disable or enable unlimited ammo.
-                if (options.DisableUnlimitedAmmo || options.ResetEverything)
+                if (options.DisableUnlimitedAmmo || options.ResetAll)
                 {
                     ht.DisableUnlimitedHummanAmmo();
                 }
@@ -34,7 +34,7 @@
                 }
 
                 // Disable or enable unlimited grenades.
-                if (options.DisableUnlimitedGrenades || options.ResetEverything)
+                if (options.DisableUnlimitedGrenades || options.ResetAll)
                 {
                     ht.DisableUnlimitedGrenades();
                 }
@@ -44,7 +44,7 @@
                 }
 
                 // Disable or enable unlimited flashlight power.
-                if (options.DisableUnlimitedFlashlightPower || options.ResetEverything)
+                if (options.DisableUnlimitedFlashlightPower || options.ResetAll)
                 {
                     ht.DisableUnlimitedFlashlightPower();
                 }
@@ -54,7 +54,7 @@
                 }
 
                 // Disable invisibility when specified. Otherwise enable them.
-                if (options.ResetInvisibility || options.ResetEverything)
+                if (options.ResetInvisibility || options.ResetAll)
                 {
                     ht.EnableInvisibility = false;
                     ht.ResetInvisibility();
@@ -66,7 +66,7 @@
                 }
 
                 // Disable massive shields when specified. Otherwise enable them.
-                if (options.ResetShields || options.ResetEverything)
+                if (options.ResetShields || options.ResetAll)
                 {
                     ht.EnableMassiveShields = false;
                     ht.ResetShields();
