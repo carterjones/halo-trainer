@@ -105,6 +105,10 @@
       <Project>{27DFEE97-CFFB-4B4C-ACED-075AA2E25B11}</Project>
       <Name>Nouzuru</Name>
     </ProjectReference>
+    <ProjectReference Include="..\plugins\nouzuru\plugins\bunseki\plugins\distorm3cs\Distorm3cs\Distorm3cs.csproj">
+      <Project>{27C84C77-6F54-481F-8598-639AC768753D}</Project>
+      <Name>Distorm3cs</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

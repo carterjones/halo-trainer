@@ -68,6 +68,9 @@
                 return false;
             }
 
+            // Disable logging.
+            this.Status.PermittedLevels = Logger.Logger.Level.NONE;
+
             // Initialize the list of 1st person campaign levels for easy and normal.
             this.levelAddressesEasyNormal = new Dictionary<short, int>();
             this.levelAddressesEasyNormal.Add(0x6975, 0x00000000); // ui (not in a level)
