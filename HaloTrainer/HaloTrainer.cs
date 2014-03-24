@@ -14,9 +14,19 @@
         #region Fields
 
         /// <summary>
-        /// The list of levels and their memory addresses.
+        /// The list of levels and their memory addresses, when played on easy or normal difficulty.
         /// </summary>
-        private Dictionary<short, int> levelAddresses;
+        private Dictionary<short, int> levelAddressesEasyNormal;
+
+        /// <summary>
+        /// The list of levels and their memory addresses, when played on heroic difficulty.
+        /// </summary>
+        private Dictionary<short, int> levelAddressesHeroic;
+
+        /// <summary>
+        /// The list of levels and their memory addresses, when played on legendary difficulty.
+        /// </summary>
+        private Dictionary<short, int> levelAddressesLegendary;
 
         #endregion
 
@@ -58,19 +68,47 @@
                 return false;
             }
 
-            // Initialize the list of 1st person campaign levels.
-            this.levelAddresses = new Dictionary<short, int>();
-            this.levelAddresses.Add(0x6975, 0x00000000); // ui (not in a level)
-            this.levelAddresses.Add(0x3161, 0x4005193C); // the pillar of autumn
-            this.levelAddresses.Add(0x3361, 0x4005220C); // halo
-            this.levelAddresses.Add(0x3561, 0x400534C0); // the truth and reconciliation
-            this.levelAddresses.Add(0x3362, 0x4005313C); // the silent cartogropher
-            this.levelAddresses.Add(0x3462, 0x40051DA4); // assault on the control room
-            this.levelAddresses.Add(0x3163, 0x40050700); // 343 guilty spark
-            this.levelAddresses.Add(0x3263, 0x4005214C); // the library
-            this.levelAddresses.Add(0x3463, 0x40051E10); // two betrayals
-            this.levelAddresses.Add(0x3264, 0x40051D2C); // keyes
-            this.levelAddresses.Add(0x3464, 0x40051BF4); // the maw
+            // Initialize the list of 1st person campaign levels for easy and normal.
+            this.levelAddressesEasyNormal = new Dictionary<short, int>();
+            this.levelAddressesEasyNormal.Add(0x6975, 0x00000000); // ui (not in a level)
+            this.levelAddressesEasyNormal.Add(0x3161, 0x4005193C); // the pillar of autumn
+            this.levelAddressesEasyNormal.Add(0x3361, 0x4005220C); // halo
+            this.levelAddressesEasyNormal.Add(0x3561, 0x400534C0); // the truth and reconciliation
+            this.levelAddressesEasyNormal.Add(0x3362, 0x4005313C); // the silent cartogropher
+            this.levelAddressesEasyNormal.Add(0x3462, 0x40051DA4); // assault on the control room
+            this.levelAddressesEasyNormal.Add(0x3163, 0x40050700); // 343 guilty spark
+            this.levelAddressesEasyNormal.Add(0x3263, 0x4005214C); // the library
+            this.levelAddressesEasyNormal.Add(0x3463, 0x40051E10); // two betrayals
+            this.levelAddressesEasyNormal.Add(0x3264, 0x40051D2C); // keyes
+            this.levelAddressesEasyNormal.Add(0x3464, 0x40051BF4); // the maw
+
+            // Initialize the list of 1st person campaign levels for heroic.
+            this.levelAddressesHeroic = new Dictionary<short, int>();
+            this.levelAddressesHeroic.Add(0x6975, 0x00000000); // ui (not in a level)
+            this.levelAddressesHeroic.Add(0x3161, 0x4005193C); // the pillar of autumn
+            this.levelAddressesHeroic.Add(0x3361, 0x400521C4); // halo
+            this.levelAddressesHeroic.Add(0x3561, 0x400534C0); // the truth and reconciliation
+            this.levelAddressesHeroic.Add(0x3362, 0x4005313C); // the silent cartogropher
+            this.levelAddressesHeroic.Add(0x3462, 0x40051DA4); // assault on the control room
+            this.levelAddressesHeroic.Add(0x3163, 0x40050700); // 343 guilty spark
+            this.levelAddressesHeroic.Add(0x3263, 0x400521AC); // the library
+            this.levelAddressesHeroic.Add(0x3463, 0x40051E10); // two betrayals
+            this.levelAddressesHeroic.Add(0x3264, 0x40051D2C); // keyes
+            this.levelAddressesHeroic.Add(0x3464, 0x40051BF4); // the maw
+
+            // Initialize the list of 1st person campaign levels for legendary.
+            this.levelAddressesLegendary = new Dictionary<short, int>();
+            this.levelAddressesLegendary.Add(0x6975, 0x00000000); // ui (not in a level)
+            this.levelAddressesLegendary.Add(0x3161, 0x4005193C); // the pillar of autumn
+            this.levelAddressesLegendary.Add(0x3361, 0x400521A0); // halo
+            this.levelAddressesLegendary.Add(0x3561, 0x400534C0); // the truth and reconciliation
+            this.levelAddressesLegendary.Add(0x3362, 0x4005313C); // the silent cartogropher
+            this.levelAddressesLegendary.Add(0x3462, 0x40051DA4); // assault on the control room
+            this.levelAddressesLegendary.Add(0x3163, 0x40050700); // 343 guilty spark
+            this.levelAddressesLegendary.Add(0x3263, 0x40052248); // the library
+            this.levelAddressesLegendary.Add(0x3463, 0x40051E34); // two betrayals
+            this.levelAddressesLegendary.Add(0x3264, 0x40051D2C); // keyes
+            this.levelAddressesLegendary.Add(0x3464, 0x40051BF4); // the maw
 
             return true;
         }
@@ -145,8 +183,23 @@
         public bool ResetInvisibility()
         {
             int invisibilityOffset = Marshal.OffsetOf(typeof(MasterChief), "Invisibility").ToInt32();
-            ulong invisibilityAddress = (ulong)IntPtr.Add(this.GetPlayerBaseAddress(), invisibilityOffset).ToInt64();
-            return this.RestoreOriginalBytes(invisibilityAddress, "invisibility", new byte[] { 0x41 });
+            bool result = false;
+            PlayerBaseAddress ba = this.GetPlayerBaseAddress();
+
+            // Restore easy and normal invisibility.
+            ulong invisibilityAddress = (ulong)IntPtr.Add(ba.EasyNormal, invisibilityOffset).ToInt64();
+            result |= this.RestoreOriginalBytes(invisibilityAddress, "invisibility", new byte[] { 0x41 });
+
+            // Restore heroic invisibility.
+            invisibilityAddress = (ulong)IntPtr.Add(ba.Heroic, invisibilityOffset).ToInt64();
+            result |= this.RestoreOriginalBytes(invisibilityAddress, "invisibility", new byte[] { 0x41 });
+
+            // Restore legendary invisibility.
+            invisibilityAddress = (ulong)IntPtr.Add(ba.Legendary, invisibilityOffset).ToInt64();
+            result |= this.RestoreOriginalBytes(invisibilityAddress, "invisibility", new byte[] { 0x41 });
+
+            // Return true if any of the writes succeeded.
+            return result;
         }
 
         /// <summary>
@@ -156,8 +209,23 @@
         public bool ResetShields()
         {
             int shieldsOffset = Marshal.OffsetOf(typeof(MasterChief), "Shields").ToInt32();
-            ulong shieldsAddress = (ulong)IntPtr.Add(this.GetPlayerBaseAddress(), shieldsOffset).ToInt64();
-            return this.RestoreOriginalBytes(shieldsAddress, "massive shields", BitConverter.GetBytes(1.0f));
+            bool result = false;
+            PlayerBaseAddress ba = this.GetPlayerBaseAddress();
+
+            // Restore easy and normal shields.
+            ulong shieldsAddress = (ulong)IntPtr.Add(ba.EasyNormal, shieldsOffset).ToInt64();
+            result |= this.RestoreOriginalBytes(shieldsAddress, "massive shields", BitConverter.GetBytes(1.0f));
+
+            // Restore heroic shields.
+            shieldsAddress = (ulong)IntPtr.Add(ba.Heroic, shieldsOffset).ToInt64();
+            result |= this.RestoreOriginalBytes(shieldsAddress, "massive shields", BitConverter.GetBytes(1.0f));
+
+            // Restore legendary shields.
+            shieldsAddress = (ulong)IntPtr.Add(ba.Legendary, shieldsOffset).ToInt64();
+            result |= this.RestoreOriginalBytes(shieldsAddress, "massive shields", BitConverter.GetBytes(1.0f));
+
+            // Return true if any of the writes succeeded.
+            return result;
         }
 
         /// <summary>
@@ -165,7 +233,12 @@
         /// </summary>
         protected override void FreezeThread()
         {
-            IntPtr baseAddress = this.GetPlayerBaseAddress();
+            // Initialize player base address.
+            PlayerBaseAddress baseAddress = new PlayerBaseAddress();
+            baseAddress.EasyNormal = IntPtr.Zero;
+            baseAddress.Heroic = IntPtr.Zero;
+            baseAddress.Legendary = IntPtr.Zero;
+
             int shieldsOffset = Marshal.OffsetOf(typeof(MasterChief), "Shields").ToInt32();
             int invisibilityOffset = Marshal.OffsetOf(typeof(MasterChief), "Invisibility").ToInt32();
             byte[] newShieldValue = BitConverter.GetBytes((float)15);
@@ -180,12 +253,16 @@
                 {
                     if (this.EnableMassiveShields)
                     {
-                        this.Write(IntPtr.Add(baseAddress, shieldsOffset), newShieldValue);
+                        this.Write(IntPtr.Add(baseAddress.EasyNormal, shieldsOffset), newShieldValue);
+                        this.Write(IntPtr.Add(baseAddress.Heroic, shieldsOffset), newShieldValue);
+                        this.Write(IntPtr.Add(baseAddress.Legendary, shieldsOffset), newShieldValue);
                     }
 
                     if (this.EnableInvisibility)
                     {
-                        this.Write(IntPtr.Add(baseAddress, invisibilityOffset), newInvisibilityValue);
+                        this.Write(IntPtr.Add(baseAddress.EasyNormal, invisibilityOffset), newInvisibilityValue);
+                        this.Write(IntPtr.Add(baseAddress.Heroic, invisibilityOffset), newInvisibilityValue);
+                        this.Write(IntPtr.Add(baseAddress.Legendary, invisibilityOffset), newInvisibilityValue);
                     }
                 }
 
@@ -200,11 +277,16 @@
         /// Returns the base address of the player's class object, if a level is being played.
         /// Returns 0 if the player is in the home screen UI (i.e.: not in any level).
         /// </returns>
-        private IntPtr GetPlayerBaseAddress()
+        private PlayerBaseAddress GetPlayerBaseAddress()
         {
+            PlayerBaseAddress ba = new PlayerBaseAddress();
+            ba.EasyNormal = IntPtr.Zero;
+            ba.Heroic = IntPtr.Zero;
+            ba.Legendary = IntPtr.Zero;
+
             if (!this.IsOpen)
             {
-                return IntPtr.Zero;
+                return ba;
             }
 
             byte[] levelIdentifier = new byte[2];
@@ -212,19 +294,34 @@
 
             // Find out which level is currently loaded.
             this.Read(IntPtr.Add(IntPtr.Zero, 0x4000000b), levelIdentifier);
-            int levelAddress = this.levelAddresses[BitConverter.ToInt16(levelIdentifier, 0)];
-            if (levelAddress == 0)
+            int levelAddressEasyNormal = this.levelAddressesEasyNormal[BitConverter.ToInt16(levelIdentifier, 0)];
+            int levelAddressHeroic = this.levelAddressesHeroic[BitConverter.ToInt16(levelIdentifier, 0)];
+            int levelAddressLegendary = this.levelAddressesLegendary[BitConverter.ToInt16(levelIdentifier, 0)];
+            if (levelAddressEasyNormal == 0 || levelAddressHeroic == 0 || levelAddressLegendary == 0)
             {
-                return IntPtr.Zero;
+                return ba;
             }
             else
             {
-                // Obtain the pivot address that is close to the address of the character.
-                this.Read(IntPtr.Add(IntPtr.Zero, levelAddress), baseAddressPivot);
-                IntPtr pivotAddress = IntPtr.Add(IntPtr.Zero, BitConverter.ToInt32(baseAddressPivot, 0));
+                // Obtain the pivot address that is close to the address of the character for easy or normal.
+                this.Read(IntPtr.Add(IntPtr.Zero, levelAddressEasyNormal), baseAddressPivot);
+                IntPtr pivotAddressEasyNormal = IntPtr.Add(IntPtr.Zero, BitConverter.ToInt32(baseAddressPivot, 0));
 
-                // Return the address at a constant offset from the pivot address of the character.
-                return IntPtr.Add(pivotAddress, 0x5C);
+                // Obtain the pivot address that is close to the address of the character for heroic.
+                this.Read(IntPtr.Add(IntPtr.Zero, levelAddressHeroic), baseAddressPivot);
+                IntPtr pivotAddressHeroic = IntPtr.Add(IntPtr.Zero, BitConverter.ToInt32(baseAddressPivot, 0));
+
+                // Obtain the pivot address that is close to the address of the character for heroic.
+                this.Read(IntPtr.Add(IntPtr.Zero, levelAddressLegendary), baseAddressPivot);
+                IntPtr pivotAddressLegendary = IntPtr.Add(IntPtr.Zero, BitConverter.ToInt32(baseAddressPivot, 0));
+
+                // Calculate the offset for the character base addresses.
+                ba.EasyNormal = IntPtr.Add(pivotAddressEasyNormal, 0x5C);
+                ba.Heroic = IntPtr.Add(pivotAddressHeroic, 0x5C);
+                ba.Legendary = IntPtr.Add(pivotAddressLegendary, 0x5C);
+
+                // Return the base address for both easy/normal and heroic/legendary.
+                return ba;
             }
         }
 
@@ -354,6 +451,27 @@
             /// </summary>
             [FieldOffset(0x2c3)]
             public byte GrenadePlasmas;
+        }
+
+        /// <summary>
+        /// Represents the base address of the player, when on various difficulties.
+        /// </summary>
+        private struct PlayerBaseAddress
+        {
+            /// <summary>
+            /// Gets or sets the base address of the player on easy or normal difficulty.
+            /// </summary>
+            public IntPtr EasyNormal { get; set; }
+
+            /// <summary>
+            /// Gets or sets the base address of the player on heroic difficulty.
+            /// </summary>
+            public IntPtr Heroic { get; set; }
+
+            /// <summary>
+            /// Gets or sets the base address of the player on legendary difficulty.
+            /// </summary>
+            public IntPtr Legendary { get; set; }
         }
 
         #endregion
