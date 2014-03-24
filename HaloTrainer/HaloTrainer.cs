@@ -161,15 +161,6 @@
         }
 
         /// <summary>
-        /// Read the master chief data from memory into a MasterChief structure.
-        /// </summary>
-        /// <returns>Returns a MasterChief structure populated with data from the game.</returns>
-        public MasterChief ReadMasterChiefData()
-        {
-            return this.ReadStructure<MasterChief>(this.GetPlayerBaseAddress());
-        }
-
-        /// <summary>
         /// Freeze the player's shields at 15 (normal is 1, overshield is 3).
         /// </summary>
         protected override void FreezeThread()
