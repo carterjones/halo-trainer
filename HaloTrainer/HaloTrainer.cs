@@ -189,17 +189,22 @@
             bool result = false;
             PlayerBaseAddress ba = this.GetPlayerBaseAddress();
 
-            // Restore easy and normal invisibility.
-            ulong invisibilityAddress = (ulong)IntPtr.Add(ba.EasyNormal, invisibilityOffset).ToInt64();
-            result |= this.RestoreOriginalBytes(invisibilityAddress, "invisibility", new byte[] { 0x41 });
+            Console.WriteLine("[*] Disabling invisibility...");
 
-            // Restore heroic invisibility.
-            invisibilityAddress = (ulong)IntPtr.Add(ba.Heroic, invisibilityOffset).ToInt64();
-            result |= this.RestoreOriginalBytes(invisibilityAddress, "invisibility", new byte[] { 0x41 });
+            // Create byte restoration utility.
+            Action<IntPtr> restoreInvisibility = (baseAddress) =>
+            {
+                IntPtr invisibilityAddress = IntPtr.Add(baseAddress, invisibilityOffset);
+                result |= this.Write(invisibilityAddress, new byte[] { 0x41 }, WriteOptions.None);
+            };
 
-            // Restore legendary invisibility.
-            invisibilityAddress = (ulong)IntPtr.Add(ba.Legendary, invisibilityOffset).ToInt64();
-            result |= this.RestoreOriginalBytes(invisibilityAddress, "invisibility", new byte[] { 0x41 });
+            // Restore original shield values.
+            restoreInvisibility(ba.EasyNormal);
+            restoreInvisibility(ba.Heroic);
+            restoreInvisibility(ba.Legendary);
+
+            // Print the result.
+            Console.WriteLine(result ? "[+] Success." : "[-] Failure.");
 
             // Return true if any of the writes succeeded.
             return result;
@@ -215,17 +220,22 @@
             bool result = false;
             PlayerBaseAddress ba = this.GetPlayerBaseAddress();
 
-            // Restore easy and normal shields.
-            ulong shieldsAddress = (ulong)IntPtr.Add(ba.EasyNormal, shieldsOffset).ToInt64();
-            result |= this.RestoreOriginalBytes(shieldsAddress, "massive shields", BitConverter.GetBytes(1.0f));
+            Console.WriteLine("[*] Disabling massive shields...");
 
-            // Restore heroic shields.
-            shieldsAddress = (ulong)IntPtr.Add(ba.Heroic, shieldsOffset).ToInt64();
-            result |= this.RestoreOriginalBytes(shieldsAddress, "massive shields", BitConverter.GetBytes(1.0f));
+            // Create byte restoration utility.
+            Action<IntPtr> restoreShields = (baseAddress) =>
+            {
+                IntPtr invisibilityAddress = IntPtr.Add(baseAddress, shieldsOffset);
+                result |= this.Write(invisibilityAddress, BitConverter.GetBytes(1.0f), WriteOptions.None);
+            };
 
-            // Restore legendary shields.
-            shieldsAddress = (ulong)IntPtr.Add(ba.Legendary, shieldsOffset).ToInt64();
-            result |= this.RestoreOriginalBytes(shieldsAddress, "massive shields", BitConverter.GetBytes(1.0f));
+            // Restore original shield values.
+            restoreShields(ba.EasyNormal);
+            restoreShields(ba.Heroic);
+            restoreShields(ba.Legendary);
+
+            // Print the result.
+            Console.WriteLine(result ? "[+] Success." : "[-] Failure.");
 
             // Return true if any of the writes succeeded.
             return result;
