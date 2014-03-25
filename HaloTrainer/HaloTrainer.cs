@@ -53,6 +53,11 @@
         /// </summary>
         public bool EnableInvisibility { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether or not this trainer should enable unlimited health for the player.
+        /// </summary>
+        public bool EnableUnlimitedHealth { get; set; }
+
         #endregion
 
         #region Methods
@@ -242,6 +247,37 @@
         }
 
         /// <summary>
+        /// Sets the player's health value to 1.
+        /// </summary>
+        /// <returns>Returns true if the health value was successfully set.</returns>
+        public bool ResetHealth()
+        {
+            int shieldsOffset = Marshal.OffsetOf(typeof(MasterChief), "Health").ToInt32();
+            bool result = false;
+            PlayerBaseAddress ba = this.GetPlayerBaseAddress();
+
+            Console.WriteLine("[*] Disabling unlimited health...");
+
+            // Create byte restoration utility.
+            Action<IntPtr> restoreHealth = (baseAddress) =>
+            {
+                IntPtr invisibilityAddress = IntPtr.Add(baseAddress, shieldsOffset);
+                result |= this.Write(invisibilityAddress, BitConverter.GetBytes(1.0f), WriteOptions.None);
+            };
+
+            // Restore original shield values.
+            restoreHealth(ba.EasyNormal);
+            restoreHealth(ba.Heroic);
+            restoreHealth(ba.Legendary);
+
+            // Print the result.
+            Console.WriteLine(result ? "[+] Success." : "[-] Failure.");
+
+            // Return true if any of the writes succeeded.
+            return result;
+        }
+
+        /// <summary>
         /// Freeze the player's shields at 15 (normal is 1, overshield is 3).
         /// </summary>
         protected override void FreezeThread()
@@ -254,8 +290,11 @@
 
             int shieldsOffset = Marshal.OffsetOf(typeof(MasterChief), "Shields").ToInt32();
             int invisibilityOffset = Marshal.OffsetOf(typeof(MasterChief), "Invisibility").ToInt32();
+            int healthOffset = Marshal.OffsetOf(typeof(MasterChief), "Health").ToInt32();
+
             byte[] newShieldValue = BitConverter.GetBytes((float)15);
             byte[] newInvisibilityValue = new byte[] { 0x51 };
+            byte[] newHealthValue = BitConverter.GetBytes(100.0f);
 
             while (true)
             {
@@ -276,6 +315,13 @@
                         this.Write(IntPtr.Add(baseAddress.EasyNormal, invisibilityOffset), newInvisibilityValue);
                         this.Write(IntPtr.Add(baseAddress.Heroic, invisibilityOffset), newInvisibilityValue);
                         this.Write(IntPtr.Add(baseAddress.Legendary, invisibilityOffset), newInvisibilityValue);
+                    }
+
+                    if (this.EnableUnlimitedHealth)
+                    {
+                        this.Write(IntPtr.Add(baseAddress.EasyNormal, healthOffset), newHealthValue);
+                        this.Write(IntPtr.Add(baseAddress.Heroic, healthOffset), newHealthValue);
+                        this.Write(IntPtr.Add(baseAddress.Legendary, healthOffset), newHealthValue);
                     }
                 }
 
@@ -438,6 +484,12 @@
             /// </summary>
             [FieldOffset(0x1c)]
             public float DirectionFacing;
+
+            /// <summary>
+            /// The amount of health the player has.
+            /// </summary>
+            [FieldOffset(0x84)]
+            public float Health;
 
             /// <summary>
             /// The amount of shields the player has.

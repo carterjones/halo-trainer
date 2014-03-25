@@ -30,6 +30,12 @@
         [Option("no-flashlight", HelpText = "Disable unlimited flashlight power.", MutuallyExclusiveSet = "flashlight")]
         public bool DisableUnlimitedFlashlightPower { get; set; }
 
+        [Option("health", HelpText = "Enable unlimited health. (enabled by default)", MutuallyExclusiveSet = "health")]
+        public bool EnableUnlimitedHealth { get; set; }
+
+        [Option("reset-health", HelpText = "Disable unlimited health.", MutuallyExclusiveSet = "health")]
+        public bool DisableUnlimitedHealth { get; set; }
+
         [Option("invisibility", HelpText = "Enable invisibility. (enabled by default)", MutuallyExclusiveSet = "invisibility")]
         public bool EnableInvisibility { get; set; }
 
@@ -42,7 +48,7 @@
         [Option("reset-shields", HelpText = "Resets the player's shields.", MutuallyExclusiveSet = "shields")]
         public bool ResetShields { get; set; }
 
-        [Option("reset-all", HelpText = "Restores original functionality and values to: ammo, grenades, flashlight power, invisibility, and shields")]
+        [Option("reset-all", HelpText = "Restores original functionality and values to: ammo, grenades, flashlight power, invisibility, shields, and health")]
         public bool ResetAll { get; set; }
 
         [HelpOption]

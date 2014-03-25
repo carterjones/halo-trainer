@@ -53,6 +53,18 @@
                     ht.EnableUnlimitedFlashlightPower();
                 }
 
+                // Disable or enable unlimited health.
+                if (options.DisableUnlimitedHealth || options.ResetAll)
+                {
+                    ht.EnableUnlimitedHealth = false;
+                    ht.ResetHealth();
+                }
+                else
+                {
+                    ht.EnableUnlimitedHealth = true;
+                    Console.WriteLine("[+] Unlimited health enabled.");
+                }
+
                 // Disable invisibility when specified. Otherwise enable them.
                 if (options.ResetInvisibility || options.ResetAll)
                 {
@@ -78,7 +90,7 @@
                 }
 
                 // If either invisibility or massive shields are enabled, start the thread to freeze their values.
-                if (ht.EnableInvisibility || ht.EnableMassiveShields)
+                if (ht.EnableUnlimitedHealth || ht.EnableInvisibility || ht.EnableMassiveShields)
                 {
                     ht.StartFreezeThread();
 
