@@ -292,7 +292,7 @@
             int invisibilityOffset = Marshal.OffsetOf(typeof(MasterChief), "Invisibility").ToInt32();
             int healthOffset = Marshal.OffsetOf(typeof(MasterChief), "Health").ToInt32();
 
-            byte[] newShieldValue = BitConverter.GetBytes((float)15);
+            byte[] newShieldValue = BitConverter.GetBytes(100.0f);
             byte[] newInvisibilityValue = new byte[] { 0x51 };
             byte[] newHealthValue = BitConverter.GetBytes(100.0f);
 
