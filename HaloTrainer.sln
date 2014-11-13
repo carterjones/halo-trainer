@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HaloTrainer", "HaloTrainer\HaloTrainer.csproj", "{78A50819-0DAC-4773-BA8A-B3683AFCAF6B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nouzuru", "plugins\nouzuru\Nouzuru\Nouzuru.csproj", "{27DFEE97-CFFB-4B4C-ACED-075AA2E25B11}"
@@ -10,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeaEngineCS", "plugins\nouzuru\plugins\bunseki\plugins\beaengine-cs\BeaEngineCS\BeaEngineCS.csproj", "{C8241D75-0AA1-419D-A423-175FB36E4E34}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Distorm3cs", "plugins\nouzuru\plugins\bunseki\plugins\distorm3cs\Distorm3cs\Distorm3cs.csproj", "{27C84C77-6F54-481F-8598-639AC768753D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BeaEngine", "plugins\beaengine-mirror\BeaEngine.vcxproj", "{9D235BEC-5983-4DD6-9674-62565D5EDD73}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +63,14 @@ Global
 		{27C84C77-6F54-481F-8598-639AC768753D}.Release|x64.Build.0 = Release|x64
 		{27C84C77-6F54-481F-8598-639AC768753D}.Release|x86.ActiveCfg = Release|x86
 		{27C84C77-6F54-481F-8598-639AC768753D}.Release|x86.Build.0 = Release|x86
+		{9D235BEC-5983-4DD6-9674-62565D5EDD73}.Debug|x64.ActiveCfg = Debug|x64
+		{9D235BEC-5983-4DD6-9674-62565D5EDD73}.Debug|x64.Build.0 = Debug|x64
+		{9D235BEC-5983-4DD6-9674-62565D5EDD73}.Debug|x86.ActiveCfg = Debug|Win32
+		{9D235BEC-5983-4DD6-9674-62565D5EDD73}.Debug|x86.Build.0 = Debug|Win32
+		{9D235BEC-5983-4DD6-9674-62565D5EDD73}.Release|x64.ActiveCfg = Release|x64
+		{9D235BEC-5983-4DD6-9674-62565D5EDD73}.Release|x64.Build.0 = Release|x64
+		{9D235BEC-5983-4DD6-9674-62565D5EDD73}.Release|x86.ActiveCfg = Release|Win32
+		{9D235BEC-5983-4DD6-9674-62565D5EDD73}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -114,6 +114,12 @@
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>if exist $(ProjectDir)..\plugins\beaengine-mirror\Release\BeaEngine-32.dll copy $(ProjectDir)..\plugins\beaengine-mirror\Release\BeaEngine-32.dll $(ProjectDir)..\HaloTrainer\bin\Release\BeaEngine-32.dll /Y
+if exist $(ProjectDir)..\plugins\beaengine-mirror\Release\BeaEngine-64.dll copy $(ProjectDir)..\plugins\beaengine-mirror\Release\BeaEngine-64.dll $(ProjectDir)..\HaloTrainer\bin\x64\Release\BeaEngine-64.dll /Y
+if exist $(ProjectDir)..\plugins\beaengine-mirror\Debug\BeaEngine-32.dll copy $(ProjectDir)..\plugins\beaengine-mirror\Debug\BeaEngine-32.dll $(ProjectDir)..\HaloTrainer\bin\Debug\BeaEngine-32.dll /Y
+if exist $(ProjectDir)..\plugins\beaengine-mirror\Debug\BeaEngine-64.dll copy $(ProjectDir)..\plugins\beaengine-mirror\Debug\BeaEngine-64.dll $(ProjectDir)..\HaloTrainer\bin\x64\Debug\BeaEngine-64.dll /Y</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
