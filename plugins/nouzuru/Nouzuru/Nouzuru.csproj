@@ -33,6 +33,7 @@
     <DefineConstants>TRACE;WIN64</DefineConstants>
     <Optimize>false</Optimize>
     <NoStdLib>false</NoStdLib>
+    <NoWarn>CS1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <Optimize>false</Optimize>

@@ -1,0 +1,4 @@
+﻿if exist $(SolutionDir)plugins\beaengine-mirror\Release\BeaEngine-32.dll copy $(SolutionDir)plugins\beaengine-mirror\Release\BeaEngine-32.dll $(SolutionDir)HaloTrainer\bin\Release\BeaEngine-32.dll /Y
+if exist $(SolutionDir)plugins\beaengine-mirror\Release\BeaEngine-64.dll copy $(SolutionDir)plugins\beaengine-mirror\Release\BeaEngine-64.dll $(SolutionDir)HaloTrainer\bin\x64\Release\BeaEngine-64.dll /Y
+if exist $(SolutionDir)plugins\beaengine-mirror\Debug\BeaEngine-32.dll copy $(SolutionDir)plugins\beaengine-mirror\Debug\BeaEngine-32.dll $(SolutionDir)HaloTrainer\bin\Debug\BeaEngine-32.dll /Y
+if exist $(SolutionDir)plugins\beaengine-mirror\Debug\BeaEngine-64.dll copy $(SolutionDir)plugins\beaengine-mirror\Debug\BeaEngine-64.dll $(SolutionDir)HaloTrainer\bin\x64\Debug\BeaEngine-64.dll /Y
