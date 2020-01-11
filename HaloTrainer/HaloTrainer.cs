@@ -127,7 +127,7 @@
         /// <returns>Returns true if the enabling process was successful.</returns>
         public bool EnableUnlimitedHumanAmmo()
         {
-            return this.EnableWithNOPInstruction(0x004c2696, "unlimited human weapon ammunition");
+            return this.EnableWithNOPInstruction(0x004c4096, "unlimited human weapon ammunition");
         }
 
         /// <summary>
@@ -137,7 +137,7 @@
         public bool DisableUnlimitedHummanAmmo()
         {
             return this.RestoreOriginalBytes(
-                0x004c2696,
+                0x004c4096,
                 "unlimited human weapon ammunition",
                 new byte[] { 0x66, 0x89, 0x46, 0x08 });
         }
@@ -148,7 +148,7 @@
         /// <returns>Returns true if the enabling process was successful.</returns>
         public bool EnableUnlimitedGrenades()
         {
-            return this.EnableWithNOPInstruction(0x00569ce4, "unlimited grenades");
+            return this.EnableWithNOPInstruction(0x0056e314, "unlimited grenades");
         }
 
         /// <summary>
@@ -158,7 +158,7 @@
         public bool DisableUnlimitedGrenades()
         {
             return this.RestoreOriginalBytes(
-                0x00569ce4,
+                0x0056e314,
                 "unlimited grenades",
                 new byte[] { 0xfe, 0x8c, 0x38, 0x1e, 0x03, 0x00, 0x00 });
         }
@@ -169,7 +169,7 @@
         /// <returns>Returns true if the enabling process was successful.</returns>
         public bool EnableUnlimitedFlashlightPower()
         {
-            return this.EnableWithNOPInstruction(0x0055f0ad, "unlimited flashlight power");
+            return this.EnableWithNOPInstruction(0x005636ed, "unlimited flashlight power");
         }
 
         /// <summary>
@@ -179,7 +179,7 @@
         public bool DisableUnlimitedFlashlightPower()
         {
             return this.RestoreOriginalBytes(
-                0x0055f0ad,
+                0x005636ed,
                 "unlimited flashlight power",
                 new byte[] { 0xd9, 0x9b, 0x44, 0x03, 0x00, 0x00 });
         }
