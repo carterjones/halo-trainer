@@ -21,7 +21,10 @@
             if (CommandLine.Parser.Default.ParseArguments(args, options))
             {
                 HaloTrainer ht = new HaloTrainer();
-                ht.Open();
+                if (!ht.Open())
+                {
+                    return;
+                }
 
                 // Disable or enable unlimited ammo.
                 if (options.DisableUnlimitedAmmo || options.ResetAll)
