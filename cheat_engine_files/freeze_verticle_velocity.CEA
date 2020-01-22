@@ -1,10 +1,9 @@
 [enable]
-005596c6:
+halo.exe+15DD06:
 nop
 nop
 nop
 
 [disable]
-005596c6:
+halo.exe+15DD06:
 mov [eax+08],edx
-
